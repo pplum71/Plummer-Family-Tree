@@ -167,10 +167,39 @@ function applyPeopleTabVisibility(){
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', () => {
   setActiveNav();
   applyPeopleTabVisibility();
-});
 
+  // HYDRATE FROM data.json (live site) then render sections
+  (async () => {
+    try {
+      const res = await fetch('data.json', { cache: 'no-store' });
+      if (res.ok) {
+        const serverData = await res.json();
+        if (serverData && serverData.people) {
+          // Make fetched data available to existing renderers that call loadData()
+          saveData(serverData);
+        }
+      }
+    } catch (e) {
+      // no data.json yet; fall back to localStorage defaults
+    }
+
+    // Render sections if their containers exist
+    const photosEl = document.getElementById('photosGrid');
+    if (photosEl) renderPhotos(photosEl);
+
+    const storiesEl = document.getElementById('storiesList');
+    if (storiesEl) renderStories(storiesEl);
+
+    const timelineEl = document.getElementById('timeline');
+    if (timelineEl) renderTimeline(timelineEl);
+
+    const peopleEl = document.getElementById('peopleList');
+    if (peopleEl) renderPeopleList(peopleEl);
+  })();
+});
 
 
 // -------- GEDCOM IMPORT --------
