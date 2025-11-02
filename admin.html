@@ -8,29 +8,6 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body class="">
-  <script>
-    (function() {
-      // Prevent content flash before auth
-      document.documentElement.style.display = 'none';
-      try {
-        if (sessionStorage.getItem('pfh.auth') === 'ok') {
-          document.documentElement.style.display = '';
-          return;
-        }
-        var pass = prompt("Enter family password:");
-        if (pass === "Plummer2025!") {
-          sessionStorage.setItem('pfh.auth', 'ok');
-          document.documentElement.style.display = '';
-        } else {
-          alert("Access denied");
-          window.location.replace("index.html");
-        }
-      } catch (e) {
-        document.documentElement.style.display = '';
-      }
-    })();
-  </script>
-
   <header>
   <svg class="crest" viewBox="0 0 100 120" aria-label="Plummer family crest" role="img">
     <defs>
