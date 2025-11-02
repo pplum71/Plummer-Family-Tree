@@ -28,7 +28,12 @@
     <div class="brand">
       <h1>Plummer Family History</h1>
       <div class="chips"><span class="chip">Interactive D3 Tree</span></div>
+    <div style="padding:8px">
+      <label>Tree root:
+        <select id="rootSelect"></select>
+      </label>
     </div>
+
     <nav>
       <a href="index.html" class="tab">Home</a>
       <a href="tree.html" class="tab active">Family Tree</a>
@@ -192,6 +197,38 @@
     if (loadData().people.length) { renderTree(); }
     applyPeopleTabVisibility();
   });
-  </script>
+ <script>
+async function pfhInitTreeRoot(){
+  try {
+    const res = await fetch('data.json', { cache: 'no-store' });
+    const d = res.ok ? await res.json() : null;
+    if (!d || !d.people) return;
+
+    // Store for other scripts that still use loadData()
+    try { localStorage.setItem('pfh.data.v1', JSON.stringify(d)); } catch(e){}
+
+    const sel = document.getElementById('rootSelect');
+    if (!sel) return;
+
+    sel.innerHTML = (d.people || []).map(p =>
+      `<option value="${p.id}">${p.name || p.id}</option>`).join('');
+
+    const defaultRoot = (d.people.find(p => !p.father && !p.mother)?.id) || d.people[0].id;
+    sel.value = defaultRoot;
+
+    sel.addEventListener('change', () => {
+      if (typeof renderTree === 'function') renderTree(d, sel.value);
+      else document.dispatchEvent(new CustomEvent('pfh-root-change', { detail: { data:d, root: sel.value }}));
+    });
+
+    if (typeof renderTree === 'function') renderTree(d, sel.value);
+    else document.dispatchEvent(new CustomEvent('pfh-root-change', { detail: { data:d, root: sel.value }}));
+  } catch (e) {
+    console.warn('Tree root init failed', e);
+  }
+}
+document.addEventListener('DOMContentLoaded', pfhInitTreeRoot);
+</script>
+
 </body>
 </html>
