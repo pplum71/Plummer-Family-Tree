@@ -3,11 +3,11 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Plummer Family History</title>
-  <meta name="description" content="Plummer Family History - Plummer family history." />
+  <title>Admin • Plummer Family History</title>
+  <meta name="description" content="Admin • Plummer Family History - Plummer family history." />
   <link rel="stylesheet" href="style.css">
 </head>
-<body class="public">
+<body class="">
   <header>
   <svg class="crest" viewBox="0 0 100 120" aria-label="Plummer family crest" role="img">
     <defs>
@@ -48,66 +48,174 @@
   <main>
     
 <div class="grid">
+  
+    <section class="card">
+      <div class="hd"><h2>GEDCOM Import (Ancestry, etc.)</h2></div>
+      <div class="bd stack">
+        <p class="muted">Export a <b>.GED</b> file from your tree provider, then import it here to populate People and relationships. Media is not included in GEDCOM exports.</p>
+        <div class="row">
+          <input id="gedFile" type="file" accept=".ged,text/plain" />
+          <button class="btn" id="importGedBtn">Import GEDCOM</button>
+        </div>
+        <div id="gedStatus" class="small muted"></div>
+      </div>
+    </section>
+
   <div class="stack">
     <section class="card">
-      <div class="hd"><h2>Welcome</h2></div>
+      <div class="hd"><h2>Data Tools</h2></div>
       <div class="bd stack">
-        <p class="muted">Clean, multipage starter you can deploy on GitHub Pages or Netlify. Public pages show your tree, stories, photos, and timeline. Use the <b>Admin</b> page to add people and content. The <b>People</b> tab stays hidden for visitors.</p>
         <div class="row">
-          <div class="card" style="border-radius:12px;flex:1">
-            <div class="bd">
-              <h3 style="margin-top:0">Quick Start</h3>
-              <ol>
-                <li>Go to <b>Admin</b> → add a few <b>People</b>.</li>
-                <li>Pick a <b>Root Person</b> on Admin and preview <b>Family Tree</b>.</li>
-                <li>Use <b>Export</b> to download a JSON backup; <b>Import</b> to restore.</li>
-              </ol>
-              <a class="btn" href="admin.html">Open Admin</a>
-            </div>
-          </div>
-          <div class="card" style="border-radius:12px;flex:1">
-            <div class="bd">
-              <h3 style="margin-top:0">Sections</h3>
-              <ul>
-                <li><b>Family Tree</b>: Visual tree from your chosen root.</li>
-                <li><b>Stories</b>: Add memories to highlight family history.</li>
-                <li><b>Photos</b>: Gallery view (images can be in your repo or external URLs).</li>
-                <li><b>Timeline</b>: Events by year across the family.</li>
-                <li><b>Help</b>: How to publish and customize.</li>
-              </ul>
-            </div>
-          </div>
+          <button class="btn" id="exportBtn">Export</button>
+          <button class="btn secondary" id="importBtn">Import</button>
+          <input id="importFile" type="file" accept="application/json" style="display:none"/>
+        </div>
+        <label for="rootSelect2">Root Person</label>
+        <select id="rootSelect2"></select>
+        <div class="row">
+          <button class="btn secondary" id="saveLocal">Save to Browser</button>
+          <button class="btn warn" id="wipeLocal">Erase Browser Copy</button>
         </div>
         <details>
-          <summary><b>About the crest</b></summary>
-          <p class="muted">Inline SVG nods to Jamaica’s colors and the US/UK journey. Replace it later with your own crest.</p>
+          <summary><b>Raw JSON (advanced)</b></summary>
+          <textarea id="rawJson" spellcheck="false"></textarea>
+          <div class="row">
+            <button class="btn" id="applyJson">Apply JSON</button>
+            <button class="btn secondary" id="prettyJson">Pretty‑print</button>
+          </div>
         </details>
       </div>
     </section>
+
+    <section class="card">
+      <div class="hd"><h2>People</h2></div>
+      <div class="bd">
+        <div id="peopleList" class="list"></div>
+      </div>
+    </section>
   </div>
+
   <aside class="stack">
     <section class="card">
-      <div class="hd"><h2>Status</h2></div>
-      <div class="bd">
-        <div class="list">
-          <div class="pill">People stored in your browser (private)</div>
-          <div class="pill">Admin → Export/Import JSON</div>
-          <div class="pill">Public tabs pull from that data</div>
+      <div class="hd"><h2>Add / Edit Person</h2></div>
+      <div class="bd stack">
+        <input id="p_id" placeholder="ID (auto if blank)" />
+        <input id="p_name" placeholder="Full name" />
+        <div class="row">
+          <input id="p_birth" placeholder="Birth year (e.g., 1884)" />
+          <input id="p_death" placeholder="Death year (optional)" />
+        </div>
+        <input id="p_birthplace" placeholder="Birthplace (e.g., Accompong, Jamaica)" />
+        <div class="row">
+          <select id="p_father"></select>
+          <select id="p_mother"></select>
+        </div>
+        <select id="p_spouse"></select>
+        <textarea id="p_notes" placeholder="Notes (brief bio, occupations, migrations, etc.)"></textarea>
+        <div class="row">
+          <button class="btn" id="savePerson">Save Person</button>
+          <button class="btn secondary" id="resetForm">Reset</button>
         </div>
       </div>
     </section>
     <section class="card">
-      <div class="hd"><h2>Tips</h2></div>
-      <div class="bd">
-        <ul>
-          <li>Use consistent IDs (e.g., <code>lastname-YYYY</code>).</li>
-          <li>Link children by setting their <b>father</b>/<b>mother</b> fields.</li>
-          <li>Set <b>spouse</b> on both people for pairing.</li>
-        </ul>
+      <div class="hd"><h2>Shortcuts</h2></div>
+      <div class="bd list">
+        <a class="btn secondary" href="people.html">View People (public)</a>
+        <a class="btn secondary" href="tree.html">View Tree</a>
+        <a class="btn secondary" href="photos.html">View Photos</a>
+        <a class="btn secondary" href="stories.html">View Stories</a>
       </div>
     </section>
   </aside>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', ()=>{
+  // Wire data tool buttons
+  const importBtn = document.getElementById('importBtn');
+  const importFile = document.getElementById('importFile');
+  const exportBtn = document.getElementById('exportBtn');
+  const saveLocal = document.getElementById('saveLocal');
+  const wipeLocal = document.getElementById('wipeLocal');
+  const rawJson = document.getElementById('rawJson');
+  const applyJson = document.getElementById('applyJson');
+  const prettyJson = document.getElementById('prettyJson');
+
+  exportBtn?.addEventListener('click', exportData);
+  importBtn?.addEventListener('click', ()=> importFile.click());
+  importFile?.addEventListener('change', e => {
+    const file = e.target.files?.[0];
+    if(file) importData(file);
+  });
+  saveLocal?.addEventListener('click', ()=>{
+    const d = loadData();
+    saveData(d);
+    alert('Saved to browser storage.');
+  });
+  wipeLocal?.addEventListener('click', ()=>{
+    if(confirm('Erase local copy?')){
+      localStorage.removeItem('pfh.data.v1');
+      alert('Erased.');
+    }
+  });
+  prettyJson?.addEventListener('click', ()=>{
+    rawJson.value = JSON.stringify(loadData(), null, 2);
+  });
+  applyJson?.addEventListener('click', ()=>{
+    try{
+      const json = JSON.parse(rawJson.value);
+      saveData(json);
+      alert('Applied JSON. Reloading...');
+      location.reload();
+    }catch(e){ alert('Invalid JSON'); }
+  });
+
+  // Render people list
+  renderPeopleList(document.getElementById('peopleList'));
+
+  // Edit form
+  document.getElementById('savePerson')?.addEventListener('click', ()=>{
+    const form = readForm();
+    const data = loadData();
+    let id = form.id || (form.name ? form.name.toLowerCase().replace(/[^a-z0-9]+/g,'-') : `p-${Date.now()}`);
+    const existing = data.people.find(p => p.id === id);
+    const payload = { ...existing, ...form, id };
+    if(existing){
+      Object.assign(existing, payload);
+    }else{
+      data.people.push(payload);
+    }
+    saveData(data);
+    alert('Saved.');
+    location.href = 'admin.html?edit=' + encodeURIComponent(id);
+  });
+
+  document.getElementById('resetForm')?.addEventListener('click', ()=>{
+    ['p_id','p_name','p_birth','p_death','p_birthplace','p_notes'].forEach(id=> document.getElementById(id).value='');
+    ['p_father','p_mother','p_spouse'].forEach(id=> document.getElementById(id).value='');
+  });
+
+  // Pre-fill if ?edit=ID
+  const u = new URL(location.href);
+  const editId = u.searchParams.get('edit');
+  if(editId){
+    const data = loadData();
+    const p = data.people.find(x=>x.id===editId);
+    if(p){
+      document.getElementById('p_id').value = p.id || '';
+      document.getElementById('p_name').value = p.name || '';
+      document.getElementById('p_birth').value = p.birth || '';
+      document.getElementById('p_death').value = p.death || '';
+      document.getElementById('p_birthplace').value = p.birthplace || '';
+      document.getElementById('p_notes').value = p.notes || '';
+      document.getElementById('p_father').value = p.father || '';
+      document.getElementById('p_mother').value = p.mother || '';
+      document.getElementById('p_spouse').value = p.spouse || '';
+    }
+  }
+});
+</script>
 
     <div class="footer">© <span id="year">2025</span> Plummer Family • Built with love and stories</div>
   </main>
