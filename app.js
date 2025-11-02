@@ -364,8 +364,28 @@ function wireGedcomImport(){
       try{
         const text = reader.result;
         const data = parseGedcom(text);
-        saveData(data);
-        status.textContent = `Imported ${data.people.length} people. Saved to your browser storage.`;
+// Merge into existing instead of overwriting photos/stories/timeline
+  const current = loadData();
+  const byKey = new Map((current.people || []).map(
+    p => [ (p.name || '').toLowerCase().trim() + '|' + (p.birth || ''), p ]
+));
+  for (const p of (data.people || [])) {
+    const key = (p.name || '').toLowerCase().trim() + '|' + (p.birth || '');
+    if (byKey.has(key)) {
+      const tgt = byKey.get(key);
+      tgt.death      = tgt.death      || p.death;
+      tgt.birthplace = tgt.birthplace || p.birthplace;
+      tgt.father     = tgt.father     || p.father;
+      tgt.mother     = tgt.mother     || p.mother;
+      tgt.spouse     = tgt.spouse     || p.spouse;
+      tgt.notes      = [tgt.notes, p.notes].filter(Boolean).join('\n');
+  } else {
+    (current.people ||= []).push(p);
+    byKey.set(key, p);
+  }
+}
+saveData(current);
+        status.textContent = `Imported ${data.people.length} people (merged). Saved to your browser storage.`;
         alert('GEDCOM import complete. Open People/Tree to view.');
       }catch(e){
         console.error(e);
