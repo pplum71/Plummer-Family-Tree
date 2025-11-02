@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Family Tree • Plummer Family History</title>
+  <meta name="description" content="Interactive family tree" />
+  <link rel="stylesheet" href="style.css">
+  <style>
+  .node circle{ fill:#0e1626; stroke:#2dd4bf; stroke-width:1.6px }
+  .node text{ font:12px system-ui, sans-serif; fill:#e9eef7; paint-order:stroke; stroke:#0b0c0f; stroke-width:3px; stroke-linejoin:round }
+  .link{ fill:none; stroke:#27334d; stroke-width:1.2px }
+  .badge{ font-size:10px; fill:#9aa5b1 }
+  .toolbar{ display:flex; gap:10px; align-items:center; margin-bottom:12px }
+  .treeWrap{ background:#0f1219; border:1px solid #1a2232; border-radius:18px; padding:10px; overflow:auto }
+  </style>
+</head>
+<body class="public">
+  <header>
+    <svg class="crest" viewBox="0 0 100 120" aria-label="Plummer family crest" role="img">
+      <defs><linearGradient id="glow" x1="0" x2="0" y1="0" y2="1"><stop offset="0%" stop-color="#2dd4bf" stop-opacity=".9"/><stop offset="100%" stop-color="#a78bfa" stop-opacity=".6"/></linearGradient></defs>
+      <path d="M10 10 h80 v45 c0 30 -20 45 -40 55 c-20 -10 -40 -25 -40 -55 z" fill="#101828" stroke="url(#glow)" stroke-width="3"/>
+      <path d="M10 10 L90 55 L90 10 Z" fill="#f59e0b" opacity=".35"/><path d="M90 10 L10 55 L10 10 Z" fill="#22c55e" opacity=".35"/>
+      <path d="M10 100 L90 55 L90 100 Z" fill="#16a34a" opacity=".25"/><path d="M90 100 L10 55 L10 100 Z" fill="#fbbf24" opacity=".25"/>
+      <rect x="18" y="25" width="64" height="10" fill="#ef4444" opacity=".45"/><rect x="18" y="38" width="64" height="10" fill="#60a5fa" opacity=".45"/>
+      <circle cx="50" cy="28" r="3.5" fill="#e5e7eb"/><text x="50" y="82" text-anchor="middle" fill="#c7d2fe" font-weight="700" font-size="28" font-family="Georgia,serif">P</text>
+    </svg>
+    <div class="brand">
+      <h1>Plummer Family History</h1>
+      <div class="chips"><span class="chip">Interactive D3 Tree</span></div>
+    </div>
+    <nav>
+      <a href="index.html" class="tab">Home</a>
+      <a href="tree.html" class="tab active">Family Tree</a>
+      <a href="people.html" class="tab" id="peopleTab">People</a>
+      <a href="stories.html" class="tab">Stories</a>
+      <a href="photos.html" class="tab">Photos</a>
+      <a href="timeline.html" class="tab">Timeline</a>
+      <a href="help.html" class="tab">Help</a>
+      <a href="admin.html" class="tab">Admin</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="card">
+      <div class="hd"><h2>Family Tree (D3 • SVG)</h2></div>
+      <div class="bd">
+        <div class="toolbar">
+          <label for="rootSelect" class="muted">Root Person</label>
+          <select id="rootSelect"></select>
+          <button id="renderBtn" class="btn">Render Tree</button>
+          <button id="fitBtn" class="btn secondary">Fit to View</button>
+          <span id="countBadge" class="chip">—</span>
+        </div>
+        <div id="treeHost" class="treeWrap">
+          <svg id="treeSvg" width="100%" height="600" viewBox="-50 -50 1100 700"></svg>
+        </div>
+        <p class="small muted" style="margin-top:10px">Tip: import a GEDCOM on the Admin page, then come back here to render the tree from your chosen root.</p>
+      </div>
+    </section>
+    <div class="footer">© <span id="year"></span> Plummer Family • Built with love and stories</div>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+  <script src="app.js"></script>
+  <script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Build a descendant tree from our flat people list
+  function buildHierarchy(rootId){
+    const data = loadData();
+    const byId = new Map(data.people.map(p => [p.id, p]));
+    const childrenIndex = new Map();
+    for(const p of data.people){
+      if(p.father){ if(!childrenIndex.has(p.father)) childrenIndex.set(p.father, []); childrenIndex.get(p.father).push(p.id); }
+      if(p.mother){ if(!childrenIndex.has(p.mother)) childrenIndex.set(p.mother, []); childrenIndex.get(p.mother).push(p.id); }
+    }
+    function makeNode(id){
+      const p = byId.get(id);
+      if(!p) return null;
+      const label = [p.name || '(Unknown)', p.birth ? String(p.birth) : null, p.birthplace || null].filter(Boolean).join(' • ');
+      const kids = (childrenIndex.get(id) || []).map(makeNode).filter(Boolean);
+      return { id, name: p.name || '(Unknown)', label, children: dedupe(kids) };
+    }
+    function dedupe(arr){
+      const seen = new Set(); const out = [];
+      for(const n of arr){ if(!seen.has(n.id)){ seen.add(n.id); out.push(n); } }
+      return out;
+    }
+    return makeNode(rootId);
+  }
+
+  function populateRootSelect(){
+    const data = loadData();
+    const sel = document.getElementById('rootSelect');
+    sel.innerHTML = data.people.map(p => '<option value="'+p.id+'">'+p.name+'</option>').join('');
+    // If there was a previous choice saved
+    const saved = sessionStorage.getItem('pfh.root');
+    if(saved && data.people.find(p=>p.id===saved)){ sel.value = saved; }
+  }
+
+  function renderTree(){
+    const data = loadData();
+    const sel = document.getElementById('rootSelect');
+    if(!sel.value){
+      alert('Add people first (Admin), then choose a root.');
+      return;
+    }
+    sessionStorage.setItem('pfh.root', sel.value);
+    const root = buildHierarchy(sel.value);
+    const nodeCount = countNodes(root);
+    document.getElementById('countBadge').textContent = nodeCount + ' people';
+
+    const svg = d3.select('#treeSvg');
+    svg.selectAll('*').remove();
+
+    const g = svg.append('g').attr('transform', 'translate(40,40)');
+
+    const dx = 26, dy = 180; // spacing
+    const tree = d3.tree().nodeSize([dx, dy]);
+    const rootD = d3.hierarchy(root, d => d.children);
+    rootD.x0 = 0; rootD.y0 = 0;
+
+    // Collapse logic (start collapsed beyond first 2 levels)
+    rootD.each(d => {
+      d._children = d.children;
+      if (d.depth > 1) d.children = null;
+    });
+
+    function update(source){
+      const nodes = rootD.descendants().reverse();
+      const links = rootD.links();
+
+      tree(rootD);
+      let left = rootD, right = rootD;
+      rootD.eachBefore(n => {
+        if (n.x < left.x) left = n;
+        if (n.x > right.x) right = n;
+      });
+      const height = Math.max(600, right.x - left.x + dx * 2);
+      svg.attr('height', height);
+
+      const t = g.transition().duration(400);
+
+      // Nodes
+      const node = g.selectAll('g.node').data(nodes, d => d.data.id);
+      const nodeEnter = node.enter().append('g')
+        .attr('class', 'node')
+        .attr('transform', d => `translate(${source.y0},${source.x0})`)
+        .on('click', (event, d) => {
+          d.children = d.children ? null : d._children;
+          update(d);
+        });
+
+      nodeEnter.append('circle').attr('r', 4.5);
+      nodeEnter.append('text')
+        .attr('dy', '0.31em')
+        .attr('x', 8)
+        .text(d => d.data.label);
+
+      const nodeUpdate = nodeEnter.merge(node);
+      nodeUpdate.transition(t).attr('transform', d => `translate(${d.y},${d.x})`);
+      node.exit().transition(t).attr('transform', d => `translate(${source.y},${source.x})`).remove();
+
+      // Links
+      const link = g.selectAll('path.link').data(links, d => d.target.data.id);
+      const linkEnter = link.enter().append('path').attr('class', 'link')
+        .attr('d', d => elbow({x: source.x0, y: source.y0, parent: {x: source.x0, y: source.y0}}));
+      linkEnter.merge(link).transition(t).attr('d', d => elbow(d.target));
+      link.exit().transition(t).attr('d', d => elbow({x: source.x, y: source.y, parent: {x: source.x, y: source.y}})).remove();
+
+      // Stash old positions
+      rootD.eachBefore(d => { d.x0 = d.x; d.y0 = d.y; });
+    }
+
+    function elbow(d){
+      return `M${d.y},${d.x}C${(d.parent.y + d.y)/2},${d.x} ${(d.parent.y + d.y)/2},${d.parent.x} ${d.parent.y},${d.parent.x}`;
+    }
+    function countNodes(n){ let c=1; if(n.children) for(const ch of n.children) c+=countNodes(ch); return c; }
+
+    update(rootD);
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    populateRootSelect();
+    document.getElementById('renderBtn').addEventListener('click', renderTree);
+    document.getElementById('fitBtn').addEventListener('click', () => {
+      const svg = document.getElementById('treeSvg');
+      svg.setAttribute('viewBox', `-50 -50 ${svg.clientWidth+100} ${svg.clientHeight+100}`);
+    });
+    // Auto-render if root was saved
+    if (loadData().people.length) { renderTree(); }
+    applyPeopleTabVisibility();
+  });
+  </script>
+</body>
+</html>

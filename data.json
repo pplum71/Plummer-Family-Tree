@@ -1,0 +1,390 @@
+{
+  "people": [
+    {
+      "id": "patrick-plummer",
+      "name": "Patrick Plummer",
+      "birth": 1971,
+      "father": "joslyn-plummer",
+      "mother": "pearl-plummer",
+      "spouse": "taska-michelle-walker"
+    },
+    {
+      "id": "pearl-plummer",
+      "name": "Pearl PLUMMER",
+      "birth": 1934,
+      "death": 2024,
+      "birthplace": "Trelawny, Jamaica",
+      "father": "stanley-martin",
+      "mother": "iris-martin",
+      "spouse": "joslyn-plummer"
+    },
+    {
+      "id": "joslyn-plummer",
+      "name": "Joslyn Plummer",
+      "birth": 1922,
+      "death": 2012,
+      "birthplace": "Plowden Hill, Manchester, Jamaica"
+    },
+    {
+      "id": "iris-martin",
+      "name": "Iris Martin",
+      "birth": 1911,
+      "death": 1995,
+      "birthplace": "Trelawny, Jamaica",
+      "spouse": "stanley-martin"
+    },
+    {
+      "id": "stanley-martin",
+      "name": "Stanley Martin",
+      "birthplace": "Jamaica",
+      "spouse": "iris-martin"
+    },
+    {
+      "id": "jane-margaret-manning",
+      "name": "Jane Margaret Manning",
+      "birth": 1890,
+      "death": 1988,
+      "father": "john-reid-manning",
+      "spouse": "john-gordon-plummer"
+    },
+    {
+      "id": "john-gordon-plummer",
+      "name": "John Gordon Plummer",
+      "birth": 1884,
+      "death": 1935,
+      "spouse": "jane-margaret-manning"
+    },
+    {
+      "id": "john-reid-manning",
+      "name": "John Reid Manning",
+      "birth": 1856,
+      "birthplace": "Manchester, Jamaica",
+      "father": "john-lionel-manning",
+      "mother": "elizabeth-burton"
+    },
+    {
+      "id": "pearl-joyce-plummer",
+      "name": "Pearl Joyce Plummer",
+      "birth": 1934,
+      "death": 2024,
+      "birthplace": "Plowden, Manchester, Jamaica"
+    },
+    {
+      "id": "john-lionel-manning",
+      "name": "John Lionel Manning",
+      "birth": 1832,
+      "death": 1896,
+      "birthplace": "Manchester, Jamaica",
+      "mother": "ann-elizabeth-reid",
+      "spouse": "elizabeth-burton"
+    },
+    {
+      "id": "elizabeth-burton",
+      "name": "Elizabeth Burton",
+      "birth": 1833,
+      "death": 1885,
+      "birthplace": "Plowden, Manchester, Jamaica",
+      "mother": "dorothy-simpson-burton",
+      "spouse": "john-lionel-manning"
+    },
+    {
+      "id": "dorothy-simpson-burton",
+      "name": "Dorothy Simpson (Burton)",
+      "birth": 1810,
+      "birthplace": "Saint Elizabeth, Jamaica"
+    },
+    {
+      "id": "roy-plummer",
+      "name": "Roy Plummer",
+      "birth": 1969,
+      "birthplace": "Jamaica",
+      "father": "joslyn-plummer",
+      "mother": "pearl-plummer"
+    },
+    {
+      "id": "christa-y",
+      "name": "Christa Y. //"
+    },
+    {
+      "id": "leon-gordon-plummer",
+      "name": "Leon Gordon Plummer",
+      "birth": 1966,
+      "birthplace": "Jamaica",
+      "father": "joslyn-plummer",
+      "mother": "pearl-plummer"
+    },
+    {
+      "id": "builah-plummer",
+      "name": "Builah Plummer",
+      "birth": 1953,
+      "birthplace": "Plowden Hill, Manchester, Jamaica",
+      "father": "joslyn-plummer",
+      "mother": "pearl-plummer"
+    },
+    {
+      "id": "ann-elizabeth-reid",
+      "name": "Ann Elizabeth Reid",
+      "birth": 1808,
+      "death": 1889,
+      "mother": "mary-mclachlan"
+    },
+    {
+      "id": "mary-mclachlan",
+      "name": "Mary McLachlan",
+      "birth": 1782,
+      "birthplace": "Jamaica",
+      "father": "james-mclachlan"
+    },
+    {
+      "id": "james-mclachlan",
+      "name": "James McLachlan",
+      "birth": 1760,
+      "death": 1815,
+      "birthplace": "Scotland"
+    },
+    {
+      "id": "jaqueline-plummer",
+      "name": "Jaqueline Plummer",
+      "birth": 1965,
+      "birthplace": "Jama",
+      "father": "joslyn-plummer",
+      "mother": "pearl-plummer",
+      "spouse": "ronaldo-yuvon-wallace"
+    },
+    {
+      "id": "ronaldo-yuvon-wallace",
+      "name": "Ronaldo Yuvon Wallace",
+      "spouse": "jaqueline-plummer"
+    },
+    {
+      "id": "lucille-maud-plummer",
+      "name": "Lucille Maud Plummer",
+      "birth": 1914,
+      "death": 2000,
+      "birthplace": "Manchester, Jamaica",
+      "father": "john-gordon-plummer",
+      "mother": "jane-margaret-manning",
+      "spouse": "daniel-shand"
+    },
+    {
+      "id": "beulah-plummer",
+      "name": "Beulah Plummer",
+      "birth": 1916,
+      "death": 2001,
+      "birthplace": "Plowden Hill, Manchester, Jamaica",
+      "father": "john-gordon-plummer",
+      "mother": "jane-margaret-manning"
+    },
+    {
+      "id": "everett-plummer-plummer",
+      "name": "Everett Plummer Plummer",
+      "birth": 1918,
+      "death": 2000,
+      "birthplace": "Plowden Hill, Manchester, Jamaica",
+      "father": "john-gordon-plummer",
+      "mother": "jane-margaret-manning"
+    },
+    {
+      "id": "egnore-plummer",
+      "name": "Egnore Plummer",
+      "birth": 1920,
+      "death": 2015,
+      "birthplace": "Plowden Hill, Manchester, Jamaica",
+      "father": "john-gordon-plummer",
+      "mother": "jane-margaret-manning"
+    },
+    {
+      "id": "dudley-plummer",
+      "name": "Dudley Plummer",
+      "father": "john-gordon-plummer"
+    },
+    {
+      "id": "lenfor-plummer-sr",
+      "name": "Lenfor Plummer sr",
+      "birth": 1912,
+      "death": 1982,
+      "birthplace": "Plowden Hill, Manchester, Jamaica",
+      "father": "john-gordon-plummer"
+    },
+    {
+      "id": "raphael-plummer",
+      "name": "Raphael Plummer",
+      "birth": 1928,
+      "birthplace": "May Hill, Manchester, Jamaica",
+      "father": "john-gordon-plummer"
+    },
+    {
+      "id": "lascelles-plummer",
+      "name": "Lascelles Plummer",
+      "father": "john-gordon-plummer"
+    },
+    {
+      "id": "cutbert-plummer",
+      "name": "Cutbert Plummer",
+      "birth": 1925,
+      "birthplace": "Alligator Pond, Manchester, Jamaica",
+      "father": "john-gordon-plummer",
+      "mother": "jane-margaret-manning"
+    },
+    {
+      "id": "cerleta-plummer",
+      "name": "Cerleta Plummer",
+      "birth": 1927,
+      "death": 2015,
+      "birthplace": "Alligator Pond, Manchester, Jamaica",
+      "father": "john-gordon-plummer",
+      "mother": "jane-margaret-manning"
+    },
+    {
+      "id": "endi-plummer",
+      "name": "Endi Plummer",
+      "birth": 1930,
+      "birthplace": "Alliga",
+      "father": "john-gordon-plummer",
+      "mother": "jane-margaret-manning"
+    },
+    {
+      "id": "martina-plummer",
+      "name": "Martina Plummer",
+      "birth": 1927,
+      "birthplace": "Alligator Pond, Manchester, Jamaica",
+      "father": "john-gordon-plummer",
+      "mother": "jane-margaret-manning"
+    },
+    {
+      "id": "ephygenia-plummer",
+      "name": "Ephygenia Plummer",
+      "birth": 1932,
+      "death": 1959,
+      "birthplace": "Plowden Hill, Manchester, Jamaica",
+      "father": "john-gordon-plummer",
+      "mother": "jane-margaret-manning",
+      "spouse": "charles-swaby"
+    },
+    {
+      "id": "charles-swaby",
+      "name": "Charles Swaby",
+      "death": 1985,
+      "birthplace": "Plowden Hill, Manchester, Jamaica",
+      "spouse": "ephygenia-plummer"
+    },
+    {
+      "id": "merlin-adina-plummer",
+      "name": "Merlin Adina PLUMMER",
+      "birth": 1934,
+      "death": 2002,
+      "birthplace": "Alligator Pond, Manchester, Jamaica",
+      "father": "john-gordon-plummer",
+      "mother": "jane-margaret-manning",
+      "spouse": "donald-mckenzie"
+    },
+    {
+      "id": "donald-mckenzie",
+      "name": "Donald McKENZIE",
+      "birth": 1940,
+      "death": 2011,
+      "birthplace": "Clarendon, Jamaica",
+      "spouse": "merlin-adina-plummer"
+    },
+    {
+      "id": "marjorie-martin",
+      "name": "Marjorie Martin",
+      "father": "stanley-martin"
+    },
+    {
+      "id": "sidney-martin",
+      "name": "Sidney Martin",
+      "father": "stanley-martin",
+      "mother": "iris-martin"
+    },
+    {
+      "id": "roy-martin",
+      "name": "Roy Martin",
+      "birthplace": "Trelawny, Jamaica",
+      "father": "stanley-martin",
+      "mother": "iris-martin"
+    },
+    {
+      "id": "johnny-martin",
+      "name": "Johnny Martin",
+      "birthplace": "Trelawny, Jamaica",
+      "father": "stanley-martin",
+      "mother": "iris-martin"
+    },
+    {
+      "id": "linford-martin",
+      "name": "Linford Martin",
+      "birthplace": "Trelawny, Jamaica",
+      "father": "stanley-martin",
+      "mother": "iris-martin"
+    },
+    {
+      "id": "douglas-martin",
+      "name": "Douglas Martin",
+      "birthplace": "Trelawny",
+      "father": "stanley-martin",
+      "mother": "iris-martin"
+    },
+    {
+      "id": "cynthia-martin",
+      "name": "Cynthia Martin",
+      "birthplace": "Trelawny, Jamaica",
+      "father": "stanley-martin",
+      "mother": "iris-martin"
+    },
+    {
+      "id": "ethelyn-martin",
+      "name": "Ethelyn Martin",
+      "birthplace": "Trelawny, Jamaica",
+      "father": "stanley-martin",
+      "mother": "iris-martin"
+    },
+    {
+      "id": "taska-michelle-walker",
+      "name": "Taska Michelle Walker",
+      "birth": 1973,
+      "birthplace": "Anniston, Benton County, Alabama, USA",
+      "spouse": "patrick-plummer"
+    },
+    {
+      "id": "pa-tricka-zhane-plummer",
+      "name": "Pa'Tricka Zhane Plummer",
+      "birth": 1993,
+      "birthplace": "Bell, Texas, USA",
+      "father": "patrick-plummer",
+      "mother": "taska-michelle-walker"
+    },
+    {
+      "id": "tionna-plummer",
+      "name": "Tionna Plummer",
+      "birth": 1994,
+      "birthplace": "Colorado Springs, Colorado, USA",
+      "father": "patrick-plummer",
+      "mother": "taska-michelle-walker"
+    },
+    {
+      "id": "joslyn-plummer",
+      "name": "Joslyn Plummer",
+      "birth": 1996,
+      "birthplace": "Colorado Springs, El Paso, Colorado, USA",
+      "father": "patrick-plummer",
+      "mother": "taska-michelle-walker",
+      "spouse": "pearl-plummer"
+    },
+    {
+      "id": "daniel-shand",
+      "name": "Daniel Shand",
+      "spouse": "lucille-maud-plummer"
+    },
+    {
+      "id": "yone-simpson",
+      "name": "Yone Simpson",
+      "birth": 1965,
+      "birthplace": "Jamaica",
+      "father": "joslyn-plummer"
+    }
+  ],
+  "stories": [],
+  "photos": [],
+  "timeline": []
+}

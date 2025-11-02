@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Admin • Plummer Family History</title>
+  <meta name="description" content="Admin • Plummer Family History - Plummer family history." />
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="">
+  <script>
+    (function() {
+      // Prevent content flash before auth
+      document.documentElement.style.display = 'none';
+      try {
+        if (sessionStorage.getItem('pfh.auth') === 'ok') {
+          document.documentElement.style.display = '';
+          return;
+        }
+        var pass = prompt("Enter family password:");
+        if (pass === "Plummer2025!") {
+          sessionStorage.setItem('pfh.auth', 'ok');
+          document.documentElement.style.display = '';
+        } else {
+          alert("Access denied");
+          window.location.replace("index.html");
+        }
+      } catch (e) {
+        document.documentElement.style.display = '';
+      }
+    })();
+  </script>
+
+  <header>
+  <svg class="crest" viewBox="0 0 100 120" aria-label="Plummer family crest" role="img">
+    <defs>
+      <linearGradient id="glow" x1="0" x2="0" y1="0" y2="1">
+        <stop offset="0%" stop-color="#2dd4bf" stop-opacity=".9"/>
+        <stop offset="100%" stop-color="#a78bfa" stop-opacity=".6"/>
+      </linearGradient>
+    </defs>
+    <path d="M10 10 h80 v45 c0 30 -20 45 -40 55 c-20 -10 -40 -25 -40 -55 z" fill="#101828" stroke="url(#glow)" stroke-width="3"/>
+    <path d="M10 10 L90 55 L90 10 Z" fill="#f59e0b" opacity=".35"/>
+    <path d="M90 10 L10 55 L10 10 Z" fill="#22c55e" opacity=".35"/>
+    <path d="M10 100 L90 55 L90 100 Z" fill="#16a34a" opacity=".25"/>
+    <path d="M90 100 L10 55 L10 100 Z" fill="#fbbf24" opacity=".25"/>
+    <rect x="18" y="25" width="64" height="10" fill="#ef4444" opacity=".45"/>
+    <rect x="18" y="38" width="64" height="10" fill="#60a5fa" opacity=".45"/>
+    <circle cx="50" cy="28" r="3.5" fill="#e5e7eb"/>
+    <text x="50" y="82" text-anchor="middle" fill="#c7d2fe" font-weight="700" font-size="28" font-family="Georgia,serif">P</text>
+  </svg>
+  <div class="brand">
+    <h1>Plummer Family History</h1>
+    <div class="chips">
+      <span class="chip">Accompong → US & UK</span>
+      <span class="chip">Stories • Tree • Photos</span>
+    </div>
+  </div>
+  <nav>
+    <a href="index.html" class="tab">Home</a>
+    <a href="tree.html" class="tab">Family Tree</a>
+    <a href="people.html" class="tab" id="peopleTab">People</a>
+    <a href="stories.html" class="tab">Stories</a>
+    <a href="photos.html" class="tab">Photos</a>
+    <a href="timeline.html" class="tab">Timeline</a>
+    <a href="help.html" class="tab">Help</a>
+    <a href="admin.html" class="tab">Admin</a>
+  </nav>
+</header>
+
+  <main>
+    
+<div class="grid">
+  
+    <section class="card">
+      <div class="hd"><h2>GEDCOM Import (Ancestry, etc.)</h2></div>
+      <div class="bd stack">
+        <p class="muted">Export a <b>.GED</b> file from your tree provider, then import it here to populate People and relationships. Media is not included in GEDCOM exports.</p>
+        <div class="row">
+          <input id="gedFile" type="file" accept=".ged,text/plain" />
+          <button class="btn" id="importGedBtn">Import GEDCOM</button>
+        </div>
+        <div id="gedStatus" class="small muted"></div>
+      </div>
+    </section>
+
+  <div class="stack">
+    <section class="card">
+      <div class="hd"><h2>Data Tools</h2></div>
+      <div class="bd stack">
+        <div class="row">
+          <button class="btn" id="exportBtn">Export</button>
+          <button class="btn secondary" id="importBtn">Import</button>
+          <input id="importFile" type="file" accept="application/json" style="display:none"/>
+        </div>
+        <label for="rootSelect2">Root Person</label>
+        <select id="rootSelect2"></select>
+        <div class="row">
+          <button class="btn secondary" id="saveLocal">Save to Browser</button>
+          <button class="btn warn" id="wipeLocal">Erase Browser Copy</button>
+        </div>
+        <details>
+          <summary><b>Raw JSON (advanced)</b></summary>
+          <textarea id="rawJson" spellcheck="false"></textarea>
+          <div class="row">
+            <button class="btn" id="applyJson">Apply JSON</button>
+            <button class="btn secondary" id="prettyJson">Pretty‑print</button>
+          </div>
+        </details>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="hd"><h2>People</h2></div>
+      <div class="bd">
+        <div id="peopleList" class="list"></div>
+      </div>
+    </section>
+  </div>
+
+  <aside class="stack">
+    <section class="card">
+      <div class="hd"><h2>Add / Edit Person</h2></div>
+      <div class="bd stack">
+        <input id="p_id" placeholder="ID (auto if blank)" />
+        <input id="p_name" placeholder="Full name" />
+        <div class="row">
+          <input id="p_birth" placeholder="Birth year (e.g., 1884)" />
+          <input id="p_death" placeholder="Death year (optional)" />
+        </div>
+        <input id="p_birthplace" placeholder="Birthplace (e.g., Accompong, Jamaica)" />
+        <div class="row">
+          <select id="p_father"></select>
+          <select id="p_mother"></select>
+        </div>
+        <select id="p_spouse"></select>
+        <textarea id="p_notes" placeholder="Notes (brief bio, occupations, migrations, etc.)"></textarea>
+        <div class="row">
+          <button class="btn" id="savePerson">Save Person</button>
+          <button class="btn secondary" id="resetForm">Reset</button>
+        </div>
+      </div>
+    </section>
+    <section class="card">
+      <div class="hd"><h2>Shortcuts</h2></div>
+      <div class="bd list">
+        <a class="btn secondary" href="people.html">View People (public)</a>
+        <a class="btn secondary" href="tree.html">View Tree</a>
+        <a class="btn secondary" href="photos.html">View Photos</a>
+        <a class="btn secondary" href="stories.html">View Stories</a>
+      </div>
+    </section>
+  </aside>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', ()=>{
+  // Wire data tool buttons
+  const importBtn = document.getElementById('importBtn');
+  const importFile = document.getElementById('importFile');
+  const exportBtn = document.getElementById('exportBtn');
+  const saveLocal = document.getElementById('saveLocal');
+  const wipeLocal = document.getElementById('wipeLocal');
+  const rawJson = document.getElementById('rawJson');
+  const applyJson = document.getElementById('applyJson');
+  const prettyJson = document.getElementById('prettyJson');
+
+  exportBtn?.addEventListener('click', exportData);
+  importBtn?.addEventListener('click', ()=> importFile.click());
+  importFile?.addEventListener('change', e => {
+    const file = e.target.files?.[0];
+    if(file) importData(file);
+  });
+  saveLocal?.addEventListener('click', ()=>{
+    const d = loadData();
+    saveData(d);
+    alert('Saved to browser storage.');
+  });
+  wipeLocal?.addEventListener('click', ()=>{
+    if(confirm('Erase local copy?')){
+      localStorage.removeItem('pfh.data.v1');
+      alert('Erased.');
+    }
+  });
+  prettyJson?.addEventListener('click', ()=>{
+    rawJson.value = JSON.stringify(loadData(), null, 2);
+  });
+  applyJson?.addEventListener('click', ()=>{
+    try{
+      const json = JSON.parse(rawJson.value);
+      saveData(json);
+      alert('Applied JSON. Reloading...');
+      location.reload();
+    }catch(e){ alert('Invalid JSON'); }
+  });
+
+  // Render people list
+  renderPeopleList(document.getElementById('peopleList'));
+
+  // Edit form
+  document.getElementById('savePerson')?.addEventListener('click', ()=>{
+    const form = readForm();
+    const data = loadData();
+    let id = form.id || (form.name ? form.name.toLowerCase().replace(/[^a-z0-9]+/g,'-') : `p-${Date.now()}`);
+    const existing = data.people.find(p => p.id === id);
+    const payload = { ...existing, ...form, id };
+    if(existing){
+      Object.assign(existing, payload);
+    }else{
+      data.people.push(payload);
+    }
+    saveData(data);
+    alert('Saved.');
+    location.href = 'admin.html?edit=' + encodeURIComponent(id);
+  });
+
+  document.getElementById('resetForm')?.addEventListener('click', ()=>{
+    ['p_id','p_name','p_birth','p_death','p_birthplace','p_notes'].forEach(id=> document.getElementById(id).value='');
+    ['p_father','p_mother','p_spouse'].forEach(id=> document.getElementById(id).value='');
+  });
+
+  // Pre-fill if ?edit=ID
+  const u = new URL(location.href);
+  const editId = u.searchParams.get('edit');
+  if(editId){
+    const data = loadData();
+    const p = data.people.find(x=>x.id===editId);
+    if(p){
+      document.getElementById('p_id').value = p.id || '';
+      document.getElementById('p_name').value = p.name || '';
+      document.getElementById('p_birth').value = p.birth || '';
+      document.getElementById('p_death').value = p.death || '';
+      document.getElementById('p_birthplace').value = p.birthplace || '';
+      document.getElementById('p_notes').value = p.notes || '';
+      document.getElementById('p_father').value = p.father || '';
+      document.getElementById('p_mother').value = p.mother || '';
+      document.getElementById('p_spouse').value = p.spouse || '';
+    }
+  }
+});
+</script>
+
+    <div class="footer">© <span id="year">2025</span> Plummer Family • Built with love and stories</div>
+  </main>
+  <script src="app.js"></script>
+  <script>populateAllSelects?.();</script>
+</body>
+</html>

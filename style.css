@@ -1,0 +1,72 @@
+
+:root{
+  --bg:#0b0c0f;
+  --panel:#11131a;
+  --ink:#e9eef7;
+  --muted:#9aa5b1;
+  --accent:#2dd4bf;
+  --accent-2:#a78bfa;
+  --accent-3:#f59e0b;
+  --danger:#ef4444;
+  --ok:#22c55e;
+  --card:#0f1219;
+  --chip:#1a1f2c;
+  --br:18px;
+  --shadow:0 8px 30px rgba(0,0,0,.35);
+  --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  --sans: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+}
+html,body{height:100%}
+*{box-sizing:border-box}
+body{margin:0;background:linear-gradient(180deg,#0b0c0f 0%,#0c1018 100%);color:var(--ink);font-family:var(--sans)}
+header{display:flex;align-items:center;gap:16px;padding:18px 22px;border-bottom:1px solid #1c2230;background:#0b0f17;position:sticky;top:0;z-index:20}
+.brand{display:flex;align-items:center;gap:14px}
+.brand h1{font-size:20px;letter-spacing:.3px;margin:0}
+.crest{width:48px;height:48px}
+nav{margin-left:auto;display:flex;gap:6px;flex-wrap:wrap}
+.tab{background:transparent;border:1px solid #2a3245;color:var(--ink);padding:8px 12px;border-radius:999px;cursor:pointer;text-decoration:none}
+.tab.active{border-color:var(--accent);box-shadow:0 0 0 2px rgba(45,212,191,.15)}
+main{padding:22px;max-width:1100px;margin:0 auto}
+.grid{display:grid;gap:18px}
+@media(min-width:900px){.grid{grid-template-columns: 1.2fr .8fr}}
+.card{background:var(--card);border:1px solid #1a2232;border-radius:var(--br);box-shadow:var(--shadow)}
+.card h2{margin:0 0 10px 0;font-size:18px}
+.card .hd{padding:16px 18px;border-bottom:1px solid #1b2230;display:flex;align-items:center;justify-content:space-between}
+.card .bd{padding:16px 18px}
+.chips{display:flex;gap:10px;flex-wrap:wrap}
+.chip{background:var(--chip);border:1px solid #20293d;padding:6px 10px;border-radius:999px;font-size:12px;color:var(--muted)}
+.muted{color:var(--muted)}
+.row{display:flex;gap:12px;flex-wrap:wrap}
+.row> *{flex:1}
+input,select,textarea{width:100%;background:#0d121c;border:1px solid #1c2638;color:var(--ink);padding:10px 12px;border-radius:12px;outline:none}
+textarea{min-height:110px}
+label{display:block;font-size:12px;color:var(--muted);margin:8px 2px}
+.btn{appearance:none;border:0;background:var(--accent);color:#061015;font-weight:600;padding:10px 14px;border-radius:12px;cursor:pointer;text-decoration:none;display:inline-block;text-align:center}
+.btn.secondary{background:#1a2234;color:var(--ink);border:1px solid #2b3550}
+.btn.warn{background:var(--danger);color:white}
+.btn.ghost{background:transparent;border:1px dashed #2b3550;color:var(--muted)}
+.stack{display:flex;flex-direction:column;gap:12px}
+.list{display:flex;flex-direction:column;gap:8px}
+.person{padding:10px 12px;background:#0f1522;border:1px solid #1e2740;border-radius:12px}
+.tree{padding:10px 12px}
+.tree ul{list-style:none;padding-left:20px}
+.tree li{margin:6px 0;position:relative}
+.tree li::before{content:"";position:absolute;left:-12px;top:0;bottom:0;width:1px;background:#26324b}
+.tree li::after{content:"";position:absolute;left:-12px;top:12px;width:12px;height:1px;background:#26324b}
+.pill{display:inline-block;padding:4px 8px;border-radius:999px;background:#132036;border:1px solid #22304a;color:#bcd}
+.footer{opacity:.7;text-align:center;padding:20px}
+/* Public/Admin */
+.public aside{display:none}
+.public main .grid{grid-template-columns:1fr}
+.public .admin-only{display:none!important}
+.public [data-act]{display:none!important}
+/* Hide People tab unless admin=true */
+.hide-people-tab{display:none!important}
+pre.code{background:#0b0f17;border:1px solid #1b2233;border-radius:12px;padding:12px;overflow:auto;font-family:var(--mono);font-size:12px}
+.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px}
+.gallery figure{margin:0;background:#0f1522;border:1px solid #1e2740;border-radius:12px;overflow:hidden}
+.gallery img{width:100%;height:160px;object-fit:cover;display:block}
+.gallery figcaption{padding:8px 10px;font-size:12px;color:var(--muted)}
+.kv{display:grid;grid-template-columns:160px 1fr;gap:12px;align-items:center}
+hr.sep{border:0;border-top:1px solid #253049;margin:14px 0}
+.small{font-size:12px;color:var(--muted)}
